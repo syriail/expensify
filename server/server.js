@@ -9,6 +9,6 @@ app.use(express.static(publicPath));
 app.get('*', (request, response)=>{
     response.sendFile(path.join(publicPath, 'index.html'));
 });
-app.listen(port, '127.0.0.1', ()=>{
-    console.log('Express server is up');
+app.listen(port, ()=>{
+    console.log(`Express server is up on port: ${port}`);
 });
