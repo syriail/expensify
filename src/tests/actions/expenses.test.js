@@ -13,7 +13,7 @@ beforeEach((done)=>{
         expensesData[id] = {description, note, amount, createAt};
     });
     console.log(expensesData);
-    databaes.ref('expenses').set(expensesData).then(()=> deon());
+    databaes.ref('expenses').set(expensesData).then(()=> done());
 });
 
 

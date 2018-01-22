@@ -11,11 +11,11 @@ export default class ExpenseForm extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = {
+          this.state = {
             description: props.expense ? props.expense.description : '',
             amount: props.expense ? (props.expense.amount / 100).toString() : '',
             note: props.expense ? props.expense.note : '',
-            createAt: props.expense ? props.expense.createAt : moment(),
+            createAt: props.expense ? moment(props.expense.createAt) : moment(),
             calendarFocused: false,
             error: ''
         };
@@ -74,7 +74,7 @@ export default class ExpenseForm extends React.Component{
                 description: this.state.description,
                 amount: parseFloat(this.state.amount, 10)*100,
                 note: this.state.note,
-                createAt: this.state.createAt
+                createAt: this.state.createAt.valueOf()
             });
         }
     };

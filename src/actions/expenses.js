@@ -11,7 +11,9 @@ export const startAddExpense = (expenseData = {})=>{
         const {
             description = '', note = '', amount = 0, createAt = 0
         } = expenseData;
+
         const expense = {description, note, amount, createAt};
+        console.log(expense);
         //We return here to chain another then in test cases. See expenses.test.js
         return database.ref('expenses').push(expense).then((ref)=>{
             dispatch(addExpense({
