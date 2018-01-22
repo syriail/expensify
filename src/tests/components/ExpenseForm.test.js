@@ -91,6 +91,6 @@ test('Should call onSubmit props for valid form submission', ()=>{
         description: expenses[1].description,
         amount: expenses[1].amount,
         note: expenses[1].note,
-        createAt: expenses[1].createAt.valueOf()
+        createAt: expenses[1].createAt
     });
 });
