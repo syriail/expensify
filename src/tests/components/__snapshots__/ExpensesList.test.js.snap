@@ -20,7 +20,7 @@ exports[`Should render the list of given expenses! 1`] = `
     amount={250}
     createAt={-86400000}
     description="Coffe"
-    id={1}
+    id="1"
     key="1"
     note=""
   />
@@ -28,7 +28,7 @@ exports[`Should render the list of given expenses! 1`] = `
     amount={350}
     createAt={172800000}
     description="Tee"
-    id={2}
+    id="2"
     key="2"
     note=""
   />
@@ -36,7 +36,7 @@ exports[`Should render the list of given expenses! 1`] = `
     amount={1250}
     createAt={86400000}
     description="Gas bill"
-    id={3}
+    id="3"
     key="3"
     note=""
   />
@@ -44,7 +44,7 @@ exports[`Should render the list of given expenses! 1`] = `
     amount={100000}
     createAt={0}
     description="Rend"
-    id={4}
+    id="4"
     key="4"
     note=""
   />
@@ -52,7 +52,7 @@ exports[`Should render the list of given expenses! 1`] = `
     amount={9800}
     createAt={259200000}
     description="Water bill"
-    id={5}
+    id="5"
     key="5"
     note=""
   />

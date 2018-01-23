@@ -13,13 +13,27 @@ export const startAddExpense = (expenseData = {})=>{
         } = expenseData;
 
         const expense = {description, note, amount, createAt};
-        console.log(expense);
         //We return here to chain another then in test cases. See expenses.test.js
         return database.ref('expenses').push(expense).then((ref)=>{
             dispatch(addExpense({
                 id: ref.key,
                 ...expense
             }));
+        });
+    };
+};
+
+export const startSetExpenses = ()=>{
+    return (dispatch)=>{
+        return database.ref('expenses').once('value').then((snapshot)=>{
+            const expenses = [];
+            snapshot.forEach((child) => {
+                expenses.push({
+                    id: child.key,
+                    ...child.val()
+                });
+            });
+            dispatch(setExpenses(expenses));
         });
     };
 };
@@ -34,4 +48,11 @@ export const editExpense = (id, updates) => ({
     id,
     updates
 });
+
+export const setExpenses = (expenses)=> ({
+    type: 'SET_EXPENSES',
+    expenses
+});
+
+
 

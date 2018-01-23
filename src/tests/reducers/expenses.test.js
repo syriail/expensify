@@ -19,12 +19,12 @@ test('Should add an expense', ()=>{
 });
 
 test('Should remove expense of id 2', ()=>{
-    const state = expensesReducer(rawExpneses, {type: 'REMOVE_EXPENSE', id: 2});
+    const state = expensesReducer(rawExpneses, {type: 'REMOVE_EXPENSE', id: '2'});
     expect(state).toEqual([rawExpneses[0], rawExpneses[2], rawExpneses[3], rawExpneses[4]]);
 });
 
 test('Should remove expense of not exists id', ()=>{
-    const state = expensesReducer(rawExpneses, {type: 'REMOVE_EXPENSE', id: -1});
+    const state = expensesReducer(rawExpneses, {type: 'REMOVE_EXPENSE', id: '-1'});
     expect(state).toEqual(rawExpneses);
 });
 
@@ -43,10 +43,10 @@ test('Should edit the expense of id 3',()=>{
     expect(state[2].description).toBe('Edited Gas bill');
 });
 
-test('Should edit the expense of id 3',()=>{
+test('should not edit an expense if id not found',()=>{
     const action = {
         type:'EDIT_EXPENSE',
-        id: -1,
+        id: '-1',
         updates:{
             description: 'Edited Gas bill',
             amount: 2300
@@ -54,6 +54,15 @@ test('Should edit the expense of id 3',()=>{
     };
 
     const state = expensesReducer(rawExpneses, action);
+    expect(state).toEqual(rawExpneses);
+});
+
+test('Should set the expenses', ()=>{
+    const action = {
+        type: 'SET_EXPENSES',
+        expenses: rawExpneses
+    };
+    const state = expensesReducer([], action);
     expect(state).toEqual(rawExpneses);
 });
 

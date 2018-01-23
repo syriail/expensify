@@ -1,4 +1,4 @@
-import {startAddExpense, addExpense, editExpense, removeExpense} from '../../actions/expenses';
+import {startAddExpense, startSetExpenses, addExpense, editExpense, removeExpense, setExpenses} from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -12,48 +12,55 @@ beforeEach((done)=>{
     expenses.forEach(({id, description, note, amount, createAt})=>{
         expensesData[id] = {description, note, amount, createAt};
     });
-    console.log(expensesData);
     databaes.ref('expenses').set(expensesData).then(()=> done());
 });
 
+test('Should setup a remove expense action object', ()=>{
+    const action = removeExpense({
+        id: '123'
+    });
 
-// test('Should setup a remove expense action object', ()=>{
-//     const action = removeExpense({
-//         id: '123'
-//     });
+    const expectedResult = {
+        type: 'REMOVE_EXPENSE',
+        id: '123'
+    };
 
-//     const expectedResult = {
-//         type: 'REMOVE_EXPENSE',
-//         id: '123'
-//     };
+    expect(action).toEqual(expectedResult);
+});
 
-//     expect(action).toEqual(expectedResult);
-// });
+test('Should setup a edit expense action object', ()=>{
+    const action = editExpense('123', {description: 'Some description', amount: 100});
 
-// test('Should setup a edit expense action object', ()=>{
-//     const action = editExpense('123', {description: 'Some description', amount: 100});
+    const expectedResult = {
+        type: 'EDIT_EXPENSE',
+        id: '123',
+        updates:{
+            description: 'Some description',
+            amount: 100
+        }
+    };
 
-//     const expectedResult = {
-//         type: 'EDIT_EXPENSE',
-//         id: '123',
-//         updates:{
-//             description: 'Some description',
-//             amount: 100
-//         }
-//     };
+    expect(action).toEqual(expectedResult);
+});
 
-//     expect(action).toEqual(expectedResult);
-// });
+test('Shoul setup a add expense action object with provided values', ()=>{
+    const action = addExpense(expenses[1]);
+    const expectedResult = {
+        type: 'ADD_EXPENSE',
+        expense: expenses[1]
+    };
 
-// test('Shoul setup a add expense action object with provided values', ()=>{
-//     const action = addExpense(expenses[1]);
-//     const expectedResult = {
-//         type: 'ADD_EXPENSE',
-//         expense: expenses[1]
-//     };
+    expect(action).toEqual(expectedResult);
+});
 
-//     expect(action).toEqual(expectedResult);
-// });
+test('Should setup a set expenses action object', ()=>{
+    const action = setExpenses(expenses);
+    const expectedResult = {
+        type: 'SET_EXPENSES',
+        expenses
+    };
+    expect(action).toEqual(expectedResult);
+});
 
 test('Should add expense to databaes and store', (done)=>{
     const mockStore = createMockStore({});
@@ -105,18 +112,15 @@ test('Should add expense with defaults to databaes and store', (done)=>{
     });;
 });
 
-// test('Shoul setup a add expense action object without values', ()=>{
-//     const action = addExpense();
-//     const expectedResult = {
-//         type: 'ADD_EXPENSE',
-//         expense:{
-//             id: expect.any(String),
-//             description: '',
-//             note: '',
-//             amount: 0,
-//             createAt: 0
-//         }
-//     };
+test('Should fetch expenses from test database', (done)=>{
+    const mockStore = createMockStore({});
+    mockStore.dispatch(startSetExpenses()).then(()=>{
+        const actions = mockStore.getActions();
+        expect(actions[0]).toEqual({
+            type: 'SET_EXPENSES',
+            expenses
+        });
+        done();
+    });
+});
 
-//     expect(action).toEqual(expectedResult);
-// });
