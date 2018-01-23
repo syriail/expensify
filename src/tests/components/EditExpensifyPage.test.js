@@ -3,14 +3,15 @@ import {shallow} from 'enzyme';
 import {EditExpensifyPage} from '../../components/EditExpensifyPage';
 import expenses from '../fixtures/expenses';
 
-let editExpenseSpy, startRemoveExpense, history, wrapper;
+//Setup spies
+let startEditExpense, startRemoveExpense, history, wrapper;
 
 beforeEach(()=>{
-    editExpenseSpy = jest.fn();
+    startEditExpense = jest.fn();
     startRemoveExpense = jest.fn();
     history = {push: jest.fn()};
     wrapper = shallow(<EditExpensifyPage
-        editExpense={editExpenseSpy}
+        startEditExpense={startEditExpense}
         startRemoveExpense={startRemoveExpense}
         history={history}
         expense={expenses[1]}
@@ -25,7 +26,7 @@ test('Should submit form after editing expense', ()=>{
     const expense = expenses[1];
     wrapper.find('ExpenseForm').prop('onSubmit')(expense);
     expect(history.push).toHaveBeenLastCalledWith('/');
-    expect(editExpenseSpy).toHaveBeenLastCalledWith(expense.id, expense);
+    expect(startEditExpense).toHaveBeenLastCalledWith(expense.id, expense);
 });
 
 test('Should remove expense', ()=>{
